@@ -29,7 +29,7 @@ for line in $(cat "$dir/bookmarks.csv"); do
   url_hash="$(echo -n $url | md5sum | sed 's/ -//g')"
   url2="${url#*://}"
   url2="${url2%%/*}"
-  done="$(grep -x "$url_hash" "$dir/done.txt")"
+  done="$(grep -m1 "$url_hash" "$dir/done.txt")"
   if [[ $done != $url_hash ]]; then
     timeout 30 pageres "$url" 1920x1080 --filename="$dateadded"_"$url2"_"$url_hash" --format='jpg' || echo "$url_hash,$url" >>"$dir/not.txt"
     echo "$url_hash" >>"$dir/done.txt"
